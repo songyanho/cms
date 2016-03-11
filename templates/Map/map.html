@@ -1,0 +1,16 @@
+{% include 'Common/header.html' %}
+<div id="map-canvas" style="height:100%; width:100%;">
+    <div id="map"></div>
+</div>
+<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBSzSxLsG1teBE0zbxCf0GcoRZfzZoNZR4&callback=initMap"></script>
+<script>
+    var map;
+    function initMap() {
+        map = new google.maps.Map(document.getElementById('map'), {
+            center: {lat: 1.352083, lng: 103.819836},
+            zoom: 11,
+            mapTypeId: google.maps.MapTypeId.TERRAIN
+        });
+    }
+</script>
+{% include 'common/footer.html' %}

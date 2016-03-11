@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en" class="no-js" ng-app="cms">
+<head>
+    <base href="{{ baseHref }}"/>
+	<meta charset="UTF-8">
+  	<title>{% if title|length > 0 %}{{ title ~ ' | ' }}{% endif %}{{ maintitle }}</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link href='https://fonts.googleapis.com/css?family=Open+Sans:300,400,700' rel='stylesheet' type='text/css'>
+	<link rel="stylesheet" href="css/reset.css"> <!-- CSS reset -->
+	<link rel="stylesheet" href="css/style.css"> <!-- Resource style -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/custom.css" rel="stylesheet">
+    <link href="css/bootstrap-tagsinput.css" rel="stylesheet">
+    <link href="plugins/font-awesome-4.5.0/css/font-awesome.min.css" rel="stylesheet">
+    <link href="css/angular-flash.min.css" rel="stylesheet">
+	<script src="js/modernizr.js"></script> <!-- Modernizr -->
+    <script src="js/jquery-2.1.4.js"></script>
+    <script src="js/angular.min.js"></script>
+    <script src="js/angular-app.js"></script>
+</head>
+<body>
+	<header class="cd-main-header">
+		<a href="#0" class="cd-logo"><h2 style="font-size: 25px;font-weight: 900;margin: 0;">C M S</h2></a>
+		
+		<div class="cd-search is-hidden">
+			<form action="#0">
+				<input type="search" placeholder="Search...">
+			</form>
+		</div> <!-- cd-search -->
+
+		<a href="#0" class="cd-nav-trigger">Menu<span></span></a>
+
+		<nav class="cd-nav">
+			<ul class="cd-top-nav">
+<!--				<li><a href="#0">Support</a></li>-->
+				<li class="has-children account">
+					<a href="#0">
+						<img src="img/cd-avatar.png" alt="avatar">
+				        {{ loggedUser.username }}
+					</a>
+
+					<ul>
+						<li><a href="{{ path_for(constant('CMS::ROLE_GUEST') ~ '#public@login.logout') }}">Logout</a></li>
+					</ul>
+				</li>
+			</ul>
+		</nav>
+	</header> <!-- .cd-main-header -->
+
+	<main class="cd-main-content">
+		<nav class="cd-side-nav">
+            {% if loggedUser.role in [constant('CMS::ROLE_KEY_DECISION_MAKER'), constant('CMS::ROLE_MINISTER')] %}
+			<ul>
+				<li class="cd-label">Decision Making</li>
+				<li class="overview{% if route.routeName == (constant('CMS::ROLE_KEY_DECISION_MAKER') ~ '&' ~ constant('CMS::ROLE_MINISTER') ~ '#map@view') %} active{% endif %}">
+					<a href="{{ path_for(constant('CMS::ROLE_KEY_DECISION_MAKER') ~ '&' ~ constant('CMS::ROLE_MINISTER') ~ '#map@view') }}">Map View</a>
+				</li>
+            </ul>
+            {% endif %}
+            {% if loggedUser.role in [constant('CMS::ROLE_CALL_OPERATOR'), constant('CMS::ROLE_AGENCY')] %}
+			<ul>
+				<li class="cd-label">Case Management</li>
+				<li class="notifications{% if route.routeName == (constant('CMS::ROLE_CALL_OPERATOR') ~ '&' ~ constant('CMS::ROLE_AGENCY') ~ '#incident@list') %} active{% endif %}">
+					<a href="{{ path_for(constant('CMS::ROLE_CALL_OPERATOR') ~ '&' ~ constant('CMS::ROLE_AGENCY') ~ '#incident@list') }}">View cases<span class="count">3</span></a>
+				</li>
+				<li class="notifications{% if route.routeName == (constant('CMS::ROLE_CALL_OPERATOR') ~ '&' ~ constant('CMS::ROLE_AGENCY') ~ '#incident@new') %} active{% endif %}">
+					<a href="{{ path_for(constant('CMS::ROLE_CALL_OPERATOR') ~ '&' ~ constant('CMS::ROLE_AGENCY') ~ '#incident@new') }}">New case</a>
+				</li>
+				<li class="notifications">
+					<a href="#0">Follow up case<span class="count">3</span></a>
+				</li>
+			</ul>
+            {% endif %}
+		</nav>
+
+		<div class="content-wrapper">

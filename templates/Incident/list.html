@@ -1,0 +1,29 @@
+{% include 'Common/header.html' %}
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Case #</th>
+            <th>Title</th>
+            <th>Time</th>
+            <th>Numbers</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% if cases|length < 1 %}
+        <tr>
+            <td colspan="5">No records</td>
+        </tr>
+        {% endif %}
+        {% for case in cases %}
+        <tr>
+            <td>{{ case.id }}</td>
+            <td>{{ case.title }}</td>
+            <td>{{ case.createdAt }}</td>
+            <td>{{ case.id|numberOfReporter }}</td>
+            <td></td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% include 'common/footer.html' %}
